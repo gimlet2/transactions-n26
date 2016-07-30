@@ -45,10 +45,9 @@ public class TransactionResource {
     @GET
     @Path("/types/{type}")
     public List<Long> getTransactionsByType(@PathParam("type") String type) {
-        List<Long> result = transactionController.getTransactionsByType(type)
+        return transactionController.getTransactionsByType(type)
                 .stream()
                 .map(Transaction::getId)
                 .collect(Collectors.toList());
-        return result;
     }
 }

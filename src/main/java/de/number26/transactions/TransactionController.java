@@ -14,9 +14,7 @@ import java.util.stream.Collectors;
 @Singleton
 public class TransactionController {
 
-    // initialized for test, but for live gets map from hazelcast in PostConstruct
     private static final Map<Long, Transaction> transactions = new HashMap<>();
-
 
     public Transaction getTransactionById(Long id) {
         return transactions.computeIfAbsent(id, _id -> {
@@ -44,7 +42,7 @@ public class TransactionController {
     public Transaction createTransaction(Long id, Transaction transaction) {
         transaction.setId(id);
         if (transactions.containsKey(id)) {
-            throw new IllegalTransactionDataException("Transaction with id 6 already exists");
+            throw new IllegalTransactionDataException("Transaction with id " + id + " already exists");
         }
         if (transaction.getParentId() != null && !transactions.containsKey(transaction.getParentId())) {
             throw new TransactionNotFoundException(transaction.getParentId());
